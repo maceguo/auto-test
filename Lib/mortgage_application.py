@@ -598,6 +598,256 @@ def varibles_processtag():
     resp = requests.put(login_url, headers=header, json=paylod)
     print('---流程确认assert---')
 
+#即将确认房产
+def varibles_ownpro():
+    login_url = f'{host}tasks/{taskid6}/variables'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {
+    "overwrite": True,
+    "taskId": f"{taskid6}",
+    "variables": [
+        {
+            "name": "propertyOwn",
+            "type": "json",
+            "value": {
+                "assets": {},
+                "ownCurrentEstate": False,
+                "ownOtherEstate": False,
+                "everOwnedEstate": False
+            }
+        }
+    ]
+}
+    resp = requests.put(login_url, headers=header, json=paylod)
+    print('-----即将确认房产-----')
+
+#拥有房产确认
+def ownpro_confirm():
+    login_url = f'{host}tasks/{taskid6}'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {"action": "complete"}
+    resp = requests.post(login_url, headers=header, json=paylod)
+    data = resp.json()
+    global taskid7
+    taskid7 = data[0]['extra']['id']
+    print('-----拥有房产确认-----')
+
+#即将开始填写situation
+def varibles_situation():
+    login_url = f'{host}processes/{processInsId}/variables'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {
+    "processInsId": f"{processInsId}",
+    "variables": [
+        {
+            "name": "clientAppProgress",
+            "type": "json",
+            "value": {
+                "applicationType": "purchase",
+                "productCategory": "mortgage",
+                "starting": {
+                    "state": "property"
+                },
+                "creditScore": {
+                    "state": "coBorrower"
+                },
+                "assets": {
+                    "state": "financialSituation"
+                },
+                "DTI": {
+                    "state": "notice"
+                },
+                "state": "assets"
+            }
+        }
+    ],
+    "overwrite": True
+}
+    resp = requests.put(login_url, headers=header, json=paylod)
+    print('---即将开始填写situation---')
+
+#situation填写
+def varibles_situationsave():
+    login_url = f'{host}tasks/{taskid7}/variables'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {
+    "overwrite": True,
+    "taskId": f"{taskid7}",
+    "variables": [
+        {
+            "name": "financialSituation",
+            "type": "json",
+            "value": {
+                "savingAccount": 12322
+            }
+        }
+    ]
+}
+    resp = requests.put(login_url, headers=header, json=paylod)
+    print('-----situation填写-----')
+
+#提交situation信息
+def situation_confirm():
+    login_url = f'{host}tasks/{taskid7}'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {"action": "complete"}
+    resp = requests.post(login_url, headers=header, json=paylod)
+    data = resp.json()
+    global taskid8
+    taskid8 = data[0]['extra']['id']
+    print('-----提交situation信息-----')
+
+#更新主流程到situation完成
+def process_situation():
+    login_url = f'{host}processes/{processInsId}/variables'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {
+    "processInsId": f"{processInsId}",
+    "variables": [
+        {
+            "name": "clientAppProgress",
+            "type": "json",
+            "value": {
+                "applicationType": "purchase",
+                "productCategory": "mortgage",
+                "starting": {
+                    "state": "property"
+                },
+                "creditScore": {
+                    "state": "coBorrower"
+                },
+                "assets": {
+                    "state": "propertyPrice"
+                },
+                "DTI": {
+                    "state": "notice"
+                },
+                "state": "assets"
+            }
+        }
+    ],
+    "overwrite": True
+}
+    resp = requests.put(login_url, headers=header, json=paylod)
+    print('---更新主流程到situation完成---')
+
+#提交贷款金额
+def varibles_price():
+    login_url = f'{host}tasks/{taskid8}/variables'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {
+    "overwrite": True,
+    "taskId": f"{taskid8}",
+    "variables": [
+        {
+            "name": "propertyNew",
+            "type": "json",
+            "value": {
+                "downPayment": 500000,
+                "purchasePrice": 1000000
+            }
+        }
+    ]
+}
+    resp = requests.put(login_url, headers=header, json=paylod)
+    print('-----提交贷款金额-----')
+
+#确认贷款金额
+def price_confirm():
+    login_url = f'{host}tasks/{taskid8}'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {"action": "complete"}
+    resp = requests.post(login_url, headers=header, json=paylod)
+    data = resp.json()
+    global taskid9
+    taskid9 = data[0]['extra']['id']
+    print('-----确认贷款金额-----')
+
+#保存所有信息
+def all_confirm():
+    login_url = f'{host}tasks/{taskid9}'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {"action": "complete"}
+    resp = requests.post(login_url, headers=header, json=paylod)
+    data = resp.json()
+    global taskid10
+    taskid10 = data[0]['extra']['id']
+    print('-----保存所有信息-----')
+
+#提交全部变量
+def varibles_all():
+    login_url = f'{host}tasks/{taskid10}/variables'
+    header = {
+        'authorization': token,
+        'accept': 'application/json,text/plain,',
+        'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    }
+    paylod = {
+    "processInsId": f"{taskid10}",
+    "variables": [
+        {
+            "name": "clientAppProgress",
+            "type": "json",
+            "value": {
+                "applicationType": "purchase",
+                "productCategory": "mortgage",
+                "starting": {
+                    "state": "property"
+                },
+                "creditScore": {
+                    "state": "coBorrower"
+                },
+                "assets": {
+                    "state": "propertyPrice"
+                },
+                "DTI": {
+                    "state": "notice"
+                },
+                "state": "realtor"
+            }
+        }
+    ],
+    "overwrite": True
+}
+    resp = requests.put(login_url, headers=header, json=paylod)
+    print('-----提交全部变量-----')
+
 start_application()
 varibles_purposre()
 varibles_property()
@@ -618,3 +868,13 @@ other_confirm()
 varibles_assets()
 varibles_ownCurrentEstate()
 varibles_processtag()
+varibles_ownpro()
+ownpro_confirm()
+varibles_situation()
+varibles_situationsave()
+situation_confirm()
+process_situation()
+varibles_price()
+price_confirm()
+all_confirm()
+varibles_all()
