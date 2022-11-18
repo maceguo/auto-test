@@ -815,38 +815,76 @@ class Application():
 
     #提交全部变量
     def varibles_all(self):
-        login_url = f'{host}tasks/{taskid10}/variables'
+        login_url = f'{host}processes/{processInsId}/variables'
         header = {
             'authorization': token,
             'accept': 'application/json,text/plain,',
             'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
         }
         paylod = {
-        "processInsId": f"{taskid10}",
-        "variables": [
-            {
-                "name": "clientAppProgress",
-                "type": "json",
-                "value": {
-                    "applicationType": "purchase",
-                    "productCategory": "mortgage",
-                    "starting": {
-                        "state": "property"
-                    },
-                    "creditScore": {
-                        "state": "coBorrower"
-                    },
-                    "assets": {
-                        "state": "propertyPrice"
-                    },
-                    "DTI": {
-                        "state": "notice"
-                    },
-                    "state": "realtor"
-                }
+    "processInsId": f"{processInsId}",
+    "variables": [
+        {
+            "name": "clientAppProgress",
+            "type": "json",
+            "value": {
+                "applicationType": "purchase",
+                "productCategory": "mortgage",
+                "starting": {
+                    "state": "property"
+                },
+                "creditScore": {
+                    "state": "coBorrower"
+                },
+                "assets": {
+                    "state": "propertyPrice"
+                },
+                "DTI": {
+                    "state": "notice"
+                },
+                "state": "realtor"
             }
-        ],
-        "overwrite": True
-    }
+        }
+    ],
+    "overwrite": True
+}
         resp = requests.put(login_url, headers=header, json=paylod)
         print('-----提交全部变量-----')
+
+    #提交代理信息
+    def varibles_allcon(self):
+        login_url = f'{host}processes/{processInsId}/variables'
+        header = {
+                'authorization': token,
+                'accept': 'application/json,text/plain,',
+                'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+            }
+        paylod = {
+    "processInsId": f"{processInsId}",
+    "variables": [
+        {
+            "name": "clientAppProgress",
+            "type": "json",
+            "value": {
+                "applicationType": "purchase",
+                "productCategory": "mortgage",
+                "starting": {
+                    "state": "property"
+                },
+                "creditScore": {
+                    "state": "coBorrower"
+                },
+                "assets": {
+                    "state": "propertyPrice"
+                },
+                "DTI": {
+                    "state": "notice"
+                },
+                "state": "celebrate"
+            }
+        }
+    ],
+    "overwrite": True
+}
+        resp = requests.put(login_url, headers=header, json=paylod)
+        print('-----提交代理信息-----')
