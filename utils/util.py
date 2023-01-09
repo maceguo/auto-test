@@ -16,7 +16,7 @@ def search_code(action,email):
     # 获取游标
     cur = conn.cursor()
     # 查询数据库获取tenant_id
-    sql1 = "SELECT tenant_id FROM public.yl_oss_institution_app where appkey = 'jcDlAFZpmslrRYwUzfpP'"
+    sql1 = "SELECT tenant_id FROM public.yl_oss_institution_app where appkey = 'jjHggHfNVaGvkabpQXfs'"
     try:
         cur.execute(sql1)
         tenant_ids = cur.fetchone()
@@ -62,15 +62,11 @@ def listapplication(token):
         }
     paylod = {"page": 1, "size": 50, "loanId": "", "loanType": [], "stage": [], "beginTime": "", "endTime": ""}
     resp = requests.post(login_url, headers=header, json=paylod)
-        # print(resp.text)
     assert resp.status_code == 200
     dict = resp.json()
-        # print(dict)
     application_list = dict['content']
-        # print(application_list)
     pre_list = []
     for i in application_list:
         if i['loanStage'] == 'Pre Approved':
             pre_list.append(i['youlandId'])
-                # print(pre_list)
     return pre_list[0]

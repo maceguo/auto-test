@@ -39,7 +39,7 @@ class Verifycode():
         }
         payload = {
         "email": f"{email}",
-        "appkey": "jcDlAFZpmslrRYwUzfpP",
+        "appkey": "jjHggHfNVaGvkabpQXfs",
         "bizType": f"{action}",
                                         }
         resp = requests.post(sendcode_url, headers=header, json=payload)
@@ -60,7 +60,7 @@ class Verifycode():
         }
         payload = {
             "code": f"{code}",
-            "appkey": "jcDlAFZpmslrRYwUzfpP",
+            "appkey": "jjHggHfNVaGvkabpQXfs",
             "email": f"{email[0][0]}",
             "bizType": f"{action}"
                                                 }
