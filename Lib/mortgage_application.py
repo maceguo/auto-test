@@ -1,5 +1,4 @@
 import json
-import pprint
 import requests,sys
 from config.config import host
 from utils.logger import logger

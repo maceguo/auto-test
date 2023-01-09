@@ -1,4 +1,7 @@
 import psycopg2
+import requests
+from config.config import host
+
 
 def search_code(action,email):
     '''
@@ -49,3 +52,25 @@ def del_user(email):
     finally:
         cur.close()
         conn.close()
+
+def listapplication(token):
+    login_url = f'{host}processes/user/application'
+    header = {
+            'authorization': token,
+            'accept': 'application/json,text/plain,',
+            'user-agen': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+        }
+    paylod = {"page": 1, "size": 50, "loanId": "", "loanType": [], "stage": [], "beginTime": "", "endTime": ""}
+    resp = requests.post(login_url, headers=header, json=paylod)
+        # print(resp.text)
+    assert resp.status_code == 200
+    dict = resp.json()
+        # print(dict)
+    application_list = dict['content']
+        # print(application_list)
+    pre_list = []
+    for i in application_list:
+        if i['loanStage'] == 'Pre Approved':
+            pre_list.append(i['youlandId'])
+                # print(pre_list)
+    return pre_list[0]
